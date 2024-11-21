@@ -3,6 +3,9 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
+
+#url: https://59174-tiziano-maceda.streamlit.app/
+
 def grafico_ventas(datos_filtro, nombre_producto):
     resumen_ventas = datos_filtro.groupby(['Año', 'Mes'])['Unidades_vendidas'].sum().reset_index()
 
