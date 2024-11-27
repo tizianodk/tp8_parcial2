@@ -29,7 +29,7 @@ def grafico_ventas(datos_filtro, nombre_producto):
         etiquetas_eje.append(f"{fila['Año']}" if fila['Mes'] == 1 else "")
     eje.set_xticklabels(etiquetas_eje)
     eje.set_ylabel('Total Unidades Vendidas')
-    eje.set_ylim(None, None)
+    eje.set_ylim(0, None)
     eje.legend(title='Producto', frameon=True, facecolor='white', edgecolor='none')
     eje.grid(True, linestyle='--', alpha=0.5, color='#cccccc')
 
