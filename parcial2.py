@@ -3,6 +3,8 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
+st.set_page_config(
+    layout="wide")
 ## ATENCION: Debe colocar la direccion en la que ha sido publicada la aplicacion en la siguiente linea\
 
 #url: https://59174-tiziano-maceda.streamlit.app/
