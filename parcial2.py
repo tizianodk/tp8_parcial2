@@ -3,13 +3,14 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
+## ATENCION: Debe colocar la direccion en la que ha sido publicada la aplicacion en la siguiente linea\
 
 #url: https://59174-tiziano-maceda.streamlit.app/
 
 def grafico_ventas(datos_filtro, nombre_producto):
     resumen_ventas = datos_filtro.groupby(['Año', 'Mes'])['Unidades_vendidas'].sum().reset_index()
 
-    figura, eje = plt.subplots(figsize=(8, 4))
+    figura, eje = plt.subplots(figsize=(10, 6))
     eje.plot(range(len(resumen_ventas)), resumen_ventas['Unidades_vendidas'], linewidth=2.5, label=nombre_producto)
 
     x_valores = np.arange(len(resumen_ventas))
@@ -35,7 +36,7 @@ def grafico_ventas(datos_filtro, nombre_producto):
     return figura
 
 def info_alumno():
-    with st.container():
+    with st.container(border=True):
          st.markdown("Legajo: 59.174")
          st.markdown("Nombre: Tiziano Maceda")
          st.markdown("Comisión: C7")
@@ -58,7 +59,7 @@ if archivo is not None:
     productos = datos['Producto'].unique()
 
     for producto in productos:
-        with st.container():
+        with st.container(border=True):
             st.subheader(f"{producto}")
             datos_filtrados = datos[datos['Producto'] == producto].copy()
 
@@ -80,15 +81,16 @@ if archivo is not None:
             variacion_unidades = unidades_anuales.pct_change().mean(skipna=True) * 100
 
             col1, col2 = st.columns([0.25, 0.75])
-
+            
             with st.container():
-                col1, col2, col3 = st.columns(3)
                 col1.metric(label="Precio Promedio", value=f"${promedio_precio:,.0f}".replace(",", "."), delta=f"{variacion_precio:.2f}%")
-                col2.metric(label="Margen Unidades", value=f"{promedio_margen:.0f}%".replace(",", "."), delta=f"{variacion_margen:.2f}%")
-                col3.metric(label="Unidades Totales", value=f"{total_unidades:,.0f}".replace(",", "."), delta=f"{variacion_unidades:.2f}%")
+                col1.metric(label="Margen Unidades", value=f"{promedio_margen:.0f}%",delta=f"{variacion_margen:.2f}%")
+                col1.metric(label="Unidades Totales", value=f"{total_unidades:,.0f}".replace(",", "."), delta=f"{variacion_unidades:.2f}%")
 
-            grafico = grafico_ventas(datos_filtrados, producto)
-            st.pyplot(grafico, clear_figure=True)
+            with col2:
+                grafico = grafico_ventas(datos_filtrados, producto)
+                st.pyplot(grafico, clear_figure=True)
+
 else:
     st.subheader("Por favor, carga un archivo CSV desde la barra lateral.")
     info_alumno()
